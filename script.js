@@ -169,6 +169,7 @@ function clearForm() {
   $("billForm").reset();
   $("billId").value = "";
   $("dueDate").value = todayISO();
+  $("autopay").value = "No";
   $("status").value = "Upcoming";
   $("priority").value = "Medium";
   $("classification").value = "Review";
