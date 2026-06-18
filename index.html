@@ -14,6 +14,7 @@
       <p class="subtitle">Track recurring bills, due dates, payment accounts, autopay status, and payment history.</p>
     </div>
     <div class="header-actions">
+      <span id="syncStatus" class="sync-status connecting">Connecting...</span>
       <button id="exportCsvBtn" class="secondary">Export Bills CSV</button>
       <button id="exportJsonBtn" class="secondary">Backup JSON</button>
       <label class="file-btn">
@@ -174,6 +175,8 @@
     <p>This app stores data in your browser's local storage. Back up JSON periodically. Do not store passwords or private statement files in a public GitHub repo.</p>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script src="data.js"></script>
   <script src="script.js"></script>
 </body>

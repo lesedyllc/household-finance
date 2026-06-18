@@ -1,5 +1,16 @@
 const STORAGE_KEY = "householdFinanceBills.v1";
 
+firebase.initializeApp({
+  apiKey: "AIzaSyDiZ9b5id6UGH84l83Y0fG2QIa4xq5bFLs",
+  authDomain: "household-finance-53cfb.firebaseapp.com",
+  projectId: "household-finance-53cfb",
+  storageBucket: "household-finance-53cfb.firebasestorage.app",
+  messagingSenderId: "358618490795",
+  appId: "1:358618490795:web:445f6775023471951154ee"
+});
+const db = firebase.firestore();
+const STATE_DOC = db.collection("household-finance").doc("state");
+
 let state = loadState();
 
 const $ = (id) => document.getElementById(id);
@@ -23,6 +34,16 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  STATE_DOC.set(state).catch(console.error);
+}
+
+function setSyncStatus(status) {
+  const el = $("syncStatus");
+  if (!el) return;
+  el.className = "sync-status " + status;
+  if (status === "synced") el.textContent = "Synced";
+  else if (status === "error") el.textContent = "Sync error";
+  else el.textContent = "Connecting...";
 }
 
 function optionList(select, items, includeAll = false) {
@@ -298,3 +319,17 @@ $("resetBtn").addEventListener("click", () => {
 
 clearForm();
 renderAll();
+
+STATE_DOC.onSnapshot(
+  (doc) => {
+    setSyncStatus("synced");
+    if (doc.exists()) {
+      state = doc.data();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+    } else {
+      STATE_DOC.set(state).catch(console.error);
+    }
+  },
+  () => setSyncStatus("error")
+);

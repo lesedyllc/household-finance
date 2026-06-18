@@ -54,6 +54,29 @@ h1, h2 { margin: 0; }
   justify-content: end;
 }
 
+.sync-status {
+  font-size: .75rem;
+  font-weight: 600;
+  padding: .3rem .65rem;
+  border-radius: 999px;
+  align-self: center;
+}
+
+.sync-status.synced {
+  background: rgba(6, 118, 71, .25);
+  color: #6ee7b7;
+}
+
+.sync-status.error {
+  background: rgba(180, 35, 24, .25);
+  color: #fca5a5;
+}
+
+.sync-status.connecting {
+  background: rgba(255, 255, 255, .1);
+  color: #93c5fd;
+}
+
 main {
   padding: 1.5rem;
   max-width: 1500px;
