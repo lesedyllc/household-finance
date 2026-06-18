@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Household Finance | Bill Payment Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">LESEDY LLC / Household Finance</p>
+      <h1>Bill Payment Tracker</h1>
+      <p class="subtitle">Track recurring bills, due dates, payment accounts, autopay status, and payment history.</p>
+    </div>
+    <div class="header-actions">
+      <button id="exportCsvBtn" class="secondary">Export Bills CSV</button>
+      <button id="exportJsonBtn" class="secondary">Backup JSON</button>
+      <label class="file-btn">
+        Restore JSON
+        <input id="restoreJsonInput" type="file" accept="application/json" hidden />
+      </label>
+      <button id="resetBtn" class="danger">Reset Demo Data</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="cards" aria-label="Dashboard">
+      <article class="card">
+        <span class="label">Due in 7 days</span>
+        <strong id="dueSoonCount">0</strong>
+      </article>
+      <article class="card">
+        <span class="label">Overdue</span>
+        <strong id="overdueCount">0</strong>
+      </article>
+      <article class="card">
+        <span class="label">Estimated monthly total</span>
+        <strong id="monthlyTotal">$0</strong>
+      </article>
+      <article class="card">
+        <span class="label">Autopay bills</span>
+        <strong id="autopayCount">0</strong>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Add or edit a bill</h2>
+          <p>Use safe labels only. Do not store bank logins or full account numbers.</p>
+        </div>
+        <button id="clearFormBtn" class="secondary">Clear form</button>
+      </div>
+
+      <form id="billForm" class="bill-form">
+        <input type="hidden" id="billId" />
+        <label>
+          Bill name
+          <input id="name" required placeholder="e.g., PECO Energy" />
+        </label>
+        <label>
+          Category
+          <select id="category"></select>
+        </label>
+        <label>
+          Amount
+          <input id="amount" type="number" min="0" step="0.01" required placeholder="0.00" />
+        </label>
+        <label>
+          Due date
+          <input id="dueDate" type="date" required />
+        </label>
+        <label>
+          Frequency
+          <select id="frequency"></select>
+        </label>
+        <label>
+          Payment account
+          <select id="account"></select>
+        </label>
+        <label>
+          Autopay
+          <select id="autopay">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Check">Check</option>
+          </select>
+        </label>
+        <label>
+          Status
+          <select id="status"></select>
+        </label>
+        <label>
+          Priority
+          <select id="priority"></select>
+        </label>
+        <label>
+          Classification
+          <select id="classification"></select>
+        </label>
+        <label class="wide">
+          Notes
+          <input id="notes" placeholder="Confirmation #, reminder, or bookkeeping note" />
+        </label>
+        <div class="form-actions wide">
+          <button type="submit" class="primary">Save bill</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Bills</h2>
+          <p>Filter, sort, mark paid, and log payments.</p>
+        </div>
+        <div class="filters">
+          <input id="searchInput" placeholder="Search bills..." />
+          <select id="statusFilter">
+            <option value="All">All statuses</option>
+          </select>
+          <select id="classFilter">
+            <option value="All">All classifications</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Due</th>
+              <th>Bill</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Account</th>
+              <th>Autopay</th>
+              <th>Status</th>
+              <th>Class</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="billTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Payment log</h2>
+          <p>Payments logged from the bill table appear here.</p>
+        </div>
+        <button id="exportPaymentsBtn" class="secondary">Export Payments CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Bill</th>
+              <th>Amount</th>
+              <th>Account</th>
+              <th>Confirmation / notes</th>
+            </tr>
+          </thead>
+          <tbody id="paymentTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>This app stores data in your browser's local storage. Back up JSON periodically. Do not store passwords or private statement files in a public GitHub repo.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
